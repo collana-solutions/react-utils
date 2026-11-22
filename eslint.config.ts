@@ -1,8 +1,12 @@
+import type { Linter } from "eslint";
 import neolutionEslintConfig from "@neolution-ch/eslint-config-neolution";
 
-export default [
+// rpt2 emits a declaration for this file. Without the explicit type, TypeScript names the
+// inferred type through a path inside the pnpm store and fails with TS2742.
+const config: Linter.Config[] = [
   {
-    ignores: ["vite.config.ts"],
+    // The Dependabot changeset script is copied from the release playbook and kept as it is there.
+    ignores: ["vite.config.ts", "scripts/generate-dependabot-changeset.mjs"],
   },
   ...neolutionEslintConfig.configs.flat.getConfig({
     ...neolutionEslintConfig.configs.flat.defaults["react-library"],
@@ -52,3 +56,5 @@ export default [
     },
   },
 ];
+
+export default config;

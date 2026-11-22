@@ -1,14 +1,14 @@
 {
-  "name": "@neolution-ch/react-utils",
+  "name": "@collana-solutions/react-utils",
   "version": "1.1.1",
   "description": "todo @drebrez",
-  "homepage": "https://collana-solutions.github.io/react-utils",
+  "homepage": "https://github.com/collana-solutions/react-utils",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/collana-solutions/react-utils"
   },
   "license": "MIT",
-  "author": "Neolution",
+  "author": "collana solutions AG",
   "sideEffects": false,
   "exports": {
     "./package.json": "./package.json",
@@ -29,23 +29,26 @@
   "scripts": {
     "build": "rollup -c --configPlugin rollup-plugin-typescript2",
     "lint": "eslint --cache",
-    "prepack": "yarn build",
-    "prepare-pr": "yarn prettier . --write && yarn lint && yarn build && yarn test",
+    "prepack": "pnpm run build",
+    "prepare-pr": "pnpm exec prettier . --write && pnpm run lint && pnpm run build && pnpm run test",
     "prettier-check": "prettier --check .",
     "prettier-write": "prettier --write .",
-    "start": "yarn build -w",
+    "start": "pnpm run build --watch",
     "test": "cypress run --component",
-    "test:all": "yarn test && yarn test:cypress",
-    "start-all": "concurrently \"yarn start\" \"yarn start-yalc\"",
-    "start-yalc": "yarn nodemon --watch dist -x \"yarn yalc push\"",
-    "storybook": "start-storybook -p 6006"
+    "test:all": "pnpm run test && pnpm run test:cypress",
+    "start-all": "concurrently \"pnpm run start\" \"pnpm run start-yalc\"",
+    "start-yalc": "nodemon --watch dist -x \"yalc push\"",
+    "storybook": "start-storybook -p 6006",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.21.8",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
     "@neolution-ch/eslint-config-neolution": "^2.3.0",
     "@popperjs/core": "^2.11.7",
-    "@release-it/keep-a-changelog": "^4.0.0",
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.1",
@@ -65,10 +68,10 @@
     "jest-localstorage-mock": "^2.4.26",
     "jiti": "^2.6.1",
     "nodemon": "^2.0.22",
+    "pkg-pr-new": "^0.0.93",
     "prettier": "^3.8.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "release-it": "^16.1.2",
     "rollup": "^4.32.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.34.1",
@@ -91,5 +94,5 @@
     "access": "public",
     "registry": "https://registry.npmjs.org"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "pnpm@11.22.0"
 }
