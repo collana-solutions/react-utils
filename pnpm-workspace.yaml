@@ -8,13 +8,6 @@ allowBuilds:
   esbuild: true
   unrs-resolver: true
 
-# @neolution-ch/eslint-config-neolution loads some of its plugins through FlatCompat, which
-# resolves them from the repository root instead of from the config package. Hoisting the
-# ESLint and Prettier packages to the root node_modules makes them resolvable from there.
-publicHoistPattern:
-  - "*eslint*"
-  - "*prettier*"
-
 # Reject package versions published less than 14 days ago (14 * 24 * 60 = 20160 minutes).
 # Mitigates supply-chain attacks by giving freshly published (potentially malicious) versions
 # time to be detected and pulled before they can be installed.
@@ -24,3 +17,9 @@ minimumReleaseAge: 20160
 # offending versions to minimumReleaseAgeExclude by itself, which would let the scheduled
 # Refresh lockfiles job quietly bypass the policy it is supposed to respect.
 minimumReleaseAgeStrict: true
+
+# Our own packages skip the waiting period. They publish only through trusted publishing
+# or by a maintainer with 2FA, so a fresh version is not the unknown the floor guards against,
+# and a library that depends on another one of ours can take its release right away.
+minimumReleaseAgeExclude:
+  - "@collana-solutions/*"

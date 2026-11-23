@@ -1,15 +1,17 @@
-import type { Linter } from "eslint";
-import neolutionEslintConfig from "@neolution-ch/eslint-config-neolution";
+import collanaEslintConfig from "@collana-solutions/eslint-config";
+
+const { getConfig, defaults } = collanaEslintConfig.configs.flat;
 
 // rpt2 emits a declaration for this file. Without the explicit type, TypeScript names the
-// inferred type through a path inside the pnpm store and fails with TS2742.
-const config: Linter.Config[] = [
+// inferred type through a path inside the pnpm store and fails with TS2742. The config
+// package returns the typescript-eslint config type, which is not assignable to Linter.Config.
+const config: ReturnType<typeof getConfig> = [
   {
     // The Dependabot changeset script is copied from the release playbook and kept as it is there.
     ignores: ["vite.config.ts", "scripts/generate-dependabot-changeset.mjs"],
   },
-  ...neolutionEslintConfig.configs.flat.getConfig({
-    ...neolutionEslintConfig.configs.flat.defaults["react-library"],
+  ...getConfig({
+    ...defaults["react-library"],
     cypressRecommended: true,
   }),
   {
